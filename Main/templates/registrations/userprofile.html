@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+	<!-- Start All Pages -->
+	<div class="all-page-title page-breadcrumb">
+		<div class="container text-center">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>EDIT PROFILE ...</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End All Pages -->
+	<div class="menu-box">
+                <div class="container">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                         <p class="text-right"><button type="submit" class="btn btn-primary">EDIT...</button></p>
+                    </form>
+                </div>
+    </div>
+
+{% endblock body %}

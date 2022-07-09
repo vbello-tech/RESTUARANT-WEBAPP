@@ -13,11 +13,7 @@ DEBUG = os.getenv('DEBUG')
 ALLOWED_HOSTS = [
     '0.0.0.0',
     'localhost',
-<<<<<<< HEAD
     'sercen.herokuapp.com', # your herokuapp url
-=======
-    'vbellofoods.herokuapp.com', # your herokuapp url
->>>>>>> 68366c6132bff41fc1c9c7e7bbf9f2c3413ba670
     '127.0.0.1'
 ]
 
@@ -35,15 +31,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-<<<<<<< HEAD
-=======
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dhzn9oqey',
-    'API_KEY': '894294618768234',
-    'API_SECRET': '8fqL8OfZKqSJChXcObtsRWqefPQ'
-}
-
->>>>>>> 68366c6132bff41fc1c9c7e7bbf9f2c3413ba670
 SECURE_SSL_REDIRECT = True
 
 SESSION_COOKIE_SECURE = True

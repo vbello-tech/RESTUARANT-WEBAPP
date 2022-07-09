@@ -12,21 +12,22 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
-from decouple import config
-import django_heroku
-import dj_database_url
-import dotenv
-<<<<<<< HEAD
-=======
-import cloudinary_storage
->>>>>>> 68366c6132bff41fc1c9c7e7bbf9f2c3413ba670
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-#BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-#new base dir
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-+=6pvdg(9=ns_*q8g$$=#@y+!q@a6uu*o7o4o(+g8-q)eokwh9'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
 
 # Application definition
 
@@ -40,17 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
-=======
-
-    'cloudinary_storage',
-    'cloudinary',
->>>>>>> 68366c6132bff41fc1c9c7e7bbf9f2c3413ba670
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -80,6 +74,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Main.wsgi.application'
 
 
+# Database
+# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -117,11 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-<<<<<<< HEAD
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static'),
-=======
-STATIC_ROOT = os.path.join(BASE_DIR, 'static'),
->>>>>>> 68366c6132bff41fc1c9c7e7bbf9f2c3413ba670
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
@@ -139,8 +138,9 @@ PASSWORD_RESET_TIMEOUT = 360
 LOGIN_REDIRECT_URL = "food:home"
 LOGOUT_REDIRECT_URL ="food:home"
 
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 1025
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-django_heroku.settings(locals())
