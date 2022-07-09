@@ -9,10 +9,17 @@ class Category(models.Model):
         return self.category
 
 # get each category and display as a chioce
-cat = Category.objects.all().values_list('category', 'category')
-CATEGORY_CHOICES = []
-for choice in cat:
-    CATEGORY_CHOICES.append(choice)
+#cat = Category.objects.all().values_list('category', 'category')
+#CATEGORY_CHOICES = []
+#for choice in cat:
+ #   CATEGORY_CHOICES.append(choice)
+
+CATEGORY_CHOICES = (
+    ('Local Delicacies', 'Local Delicacies'),
+    ('Foriegn Delicacies', 'Foriegn Delicacies'),
+    ('Medicinal Drinks', 'Medicinal Drinks'),
+    ('Wines & Alcohol', 'Wines & Alcohol')
+)
 
 LABEL_CHOICES = (
     ('Local Delicacies', 'Local Delicacies'),
