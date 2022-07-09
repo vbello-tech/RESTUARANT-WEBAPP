@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+	<!-- Start All Pages -->
+	<div class="all-page-title page-breadcrumb">
+		<div class="container text-center">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>{{ food.name }}</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End All Pages -->
+
+
+
+
+	<!-- Start Menu -->
+	<div class="menu-box">
+                <div class="container">
+                            <div class="row">
+                                <div class="detail">
+                                    <div class="image">
+                                      <img src="{{ food.img.url }}" alt="" class="img-rounded">
+                                    </div>
+                                    <div class="box">
+                                      <div id="space"></div>
+                                      {% if food.label %}
+                                        <div class="part">
+                                          <p>LABEL</p>
+                                          <div class="part-detail">
+                                            <a href="">
+                                             {{ food.label }}
+                                            </a>
+                                          </div>
+                                        </div>
+                                        {% endif %}
+                                        <div class="part">
+                                          <p>CATEGORY</p>
+                                          <div class="part-detail">
+                                            <a href="">
+                                             {{ food.category }}
+                                            </a>
+                                          </div>
+                                        </div> 
+                                        {% if food.dis_price %}
+                                        <div class="part">
+                                          <p>PRICE</p>
+                                          <p>
+                                            <span class="mr-1">
+                                              <del>${{ food.price }}</del>
+                                          </span>
+                                        </p>
+                                        </div> 
+                                        <div class="part">
+                                          <p>DISCOUNT PRICE</p>
+                                          <p>
+                                            <span>${{ food.dis_price }}</span>
+                                          </p>
+                                        </div> 
+                                        {% else %}
+                                        <div class="part">
+                                            <p>PRICE</p>
+                                            <p>
+                                              <span class="mr-1">
+                                                ${{ food.price }}
+                                            </span>
+                                          </p>
+                                          </div> 
+                                        {% endif %}
+                                        <div class="des-part">
+                                          <p>Description</p>
+
+                                          <span>{{ food.desc }}</span>
+                                        </div>
+                                        <div part>
+                                          <a href="{% url 'food:add_to_cart' pk=food.pk %}" class="btn btn-primary btn-md my-0 p">
+                                            Add to cart
+                                            <i class="fas fa-shopping-cart ml-1"></i>
+                                          </a>
+                                        </div>
+                                      </div>
+                            
+                    </div>
+                </div>
+	</div>
+	<!-- End Menu -->
+
+{% endblock body %}
