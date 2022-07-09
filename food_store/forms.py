@@ -20,11 +20,13 @@ class CheckOutForm(forms.Form):
         'aria-label': 'Recipient\'s username',
         'aria-describedby': 'basic-addon2'
     }))
-    save_info = forms.BooleanField(widget=forms.TextInput(attrs={
+    save_info = forms.BooleanField(widget=forms.CheckboxInput(attrs={
         'class': 'form-control',
+        'id': 'save_checkbox'
     }))
-    use_saved_info = forms.BooleanField(widget=forms.TextInput(attrs={
+    use_saved_info = forms.BooleanField(widget=forms.CheckboxInput(attrs={
         'class': 'form-control',
+        'id': 'fetch_checkbox'
     }))
 
 class CouponForm(forms.Form):
