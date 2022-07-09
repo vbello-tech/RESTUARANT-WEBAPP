@@ -1,1 +1,3 @@
-web: gunicorn Main.wsgi
+web: gunicorn Main.wsgi:application --log-file - --log-level debug
+heroku ps:scale web=1
+python manage.py collectstatic --noinput
