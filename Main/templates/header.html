@@ -22,12 +22,12 @@
 						<li class="nav-item"><a class="nav-link" href="{% url 'food:food_list' %}">Menu</a></li>
 						<li class="nav-item"><a class="nav-link" href="{% url 'food:about' %}">About</a></li>
 						{% if user.is_authenticated %}
-						<li class="nav-item"><a class="nav-link" href="#">LOGOUT</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">PROFILE</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'account:logout' %}">LOGOUT</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'account:user_detail' pk=user.pk %}">PROFILE</a></li>
 						{% else %}
-						<li class="nav-item"><a class="nav-link" href="#">LOGIN</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'account:login' %}">LOGIN</a></li>
 						{% endif %}
-						<li class="nav-item"><a class="nav-link" href="#">ORDERS</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'food:order_summary' %}">ORDERS</a></li>
 					</ul>
 				</div>
 			</div>

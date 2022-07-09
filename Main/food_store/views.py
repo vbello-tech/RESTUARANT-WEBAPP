@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.views.generic import TemplateView, DetailView, View, ListView
 from django.http import HttpResponse, JsonResponse, FileResponse
 from .models import *
+from accounts.models import *
 from .forms import *
 import random, string, io
 #from main.settings import Publishable_key, Secret_key
@@ -183,7 +184,6 @@ class order_summaryView(LoginRequiredMixin, View):
 # CHECK OUT VIEW
 class CheckoutView(View):
     def get(self, *args, **kwargs):
-        model = Checkout
         try:
             # ALL AVAILABLE ORDER ITEM THAT HAS NOT BEEN PAID FOR
             order = Order.objects.get(user=self.request.user, ordered=False)
@@ -206,14 +206,38 @@ class CheckoutView(View):
             order = Order.objects.get(user=self.request.user, ordered=False)
             # CHECK OUT FORM
             form = CheckOutForm(self.request.POST or None)
+            checkout = Checkout.Objects.get(user=self.request.user)
             # GETTING THE USER ADDRESS AND PHONE NUMBER TO ADD TO ORDER
             if form.is_valid():
                 address = form.cleaned_data.get('address')
                 phone = form.cleaned_data.get('phone')
-                #same_shiping_address = form.cleaned_data.get('same_shiping_address')
-                billing_address = address
-                order.billing_address=billing_address
-                order.phone = phone
+                save_info = form.cleaned_data.get('save_info')
+                use_saved_info = form.cleaned_data.get('use_saved_info')
+                if save_info:
+                    if checkout.exist():
+                        new_checkout_details = Checkout.objects.update(
+                            address = address,
+                            phone = phone
+                        )
+                    else:
+                        new_checkout_details = Checkout.objects.create(
+                            address=address,
+                            phone=phone
+                        )
+                    new_checkout_details.save()
+                if use_saved_info:
+                    if checkout.exist():
+                        billing_address = checkout.address
+                        billing_phone = checkout.phone
+                    else:
+                        messages.warning(self.request, "YOU DONT HAVE A SAVED SHIPPING ADDRESS AND PHONE NUMBER.")
+                        return redirect('food:checkout')
+                else:
+                    billing_address = address
+                    billing_phone = phone
+
+                order.billing_address = billing_address
+                order.phone = billing_phone
                 order.save()
                 # SENDING THE ORDER CONFIRMATION EMAIL
                 #order_confirmation_email(self.request)

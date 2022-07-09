@@ -89,17 +89,6 @@ class Coupon(models.Model):
         return self.code
 
 
-class Checkout(models.Model):
-    user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
-    address = models.CharField(max_length=1000, blank=False)
-    phone = models.IntegerField()
-    save_info = models.BooleanField(default=False, blank=False, null=True)
-    shipping_acc = models.BooleanField(default=False, null=True)
-    PAYMENT = models.CharField(max_length=200, blank=False)
-
-    def __str__(self):
-        return f"{self.user} ID: {self.user.id}"
-
 
 # MODELS FOR RESERVATION
 class Reservation(models.Model):
