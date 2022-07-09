@@ -13,7 +13,7 @@ DEBUG = os.getenv('DEBUG')
 ALLOWED_HOSTS = [
     '0.0.0.0',
     'localhost',
-    'sercen.herokuapp.com', # your herokuapp url
+    'vbellofoods.herokuapp.com', # your herokuapp url
     '127.0.0.1'
 ]
 
