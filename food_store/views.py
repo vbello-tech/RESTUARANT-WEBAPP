@@ -103,7 +103,7 @@ def add_to_cart_item(request, pk):
             messages.info(request, "This item quantity was increased.")
         else:
             order.foods.add(order_item)
-            return redirect('food:food_detail', pk=pk)
+            return redirect('food:order_summary')
     else:
         messages.info(request, "Add this item to your cart.")
         return redirect('food:food_detail', pk=pk)
@@ -159,12 +159,15 @@ def remove_from_cart_item(request, pk):
             # REDUCE QUANTITY OF ORDER ITEM BY 1
             order_item.quantity -= 1
             order_item.save()
+            if order_item.quantity <= 0:
+                order.foods.remove(order_item)
+                order_item.delete()
             messages.info(request, "This item quantiy was reduced.")
-            return redirect('food:food_detail', pk=pk)
+            return redirect('food:order_summary')
         else:
-            return redirect('food:food_detail', pk=pk)
+            return redirect('food:order_summary')
     else:
-        return redirect('food:food_detail', pk=pk)
+        return redirect('food:order_summary')
 
 
 # VIEW TO DISPLAY ALL AVAILABLE ORDER ITEM THAT THE ORDERED STATUS IS FALSE
