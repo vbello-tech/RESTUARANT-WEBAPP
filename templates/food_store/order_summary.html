@@ -22,7 +22,7 @@
                 <div class="container">
                             <div class="row">
                                 <div>
-    <table class="table">
+    <table class="table text-center">
   <thead class="thead-dark">
     <tr>
       <th scope="col">ITEM</th>
@@ -37,9 +37,9 @@
       <td>{{ order_item.food.name }}</td>
        <td>${{ order_item.food.price }}</td>
       <td>
-                <a href="{% url 'food:add_to_cart_item' pk=order_item.food.pk %}" class="btn btn-primary btn-md my-0 p"> + </a>
+                <a href="{% url 'food:add_to_cart_item' pk=order_item.food.pk %}" class="btn btn-secondary btn-sm"> + </a>
                 {{ order_item.quantity }}
-                <a href="{% url 'food:remove_from_cart_item' pk=order_item.food.pk %}" class="btn btn-primary btn-md my-0 p"> - </a>
+                <a href="{% url 'food:remove_from_cart_item' pk=order_item.food.pk %}" class="btn btn-secondary btn-sm"> - </a>
             </td>
       <td>
                 {% if order_item.discount_price %}
