@@ -22,37 +22,47 @@
                 <div class="container">
                             <div class="row">
                                 <div>
-  <table >
-    <thead>
-        <tr>
-            <th >Item title</th>
-            <th >Price</th>
-            <th >Quantity</th>
-            <th >Total Item Price</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for order_item in object.foods.all %}
-        <tr>
-            <td>{{ order_item.food.name }}</td>
-            <td>${{ order_item.food.price }}</td>
-            <td>{{ order_item.quantity }}</td>
-            <td>
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ITEM</th>
+      <th scope="col">PRICE</th>
+      <th scope="col">QUANTITY</th>
+      <th scope="col">TOTAL PRICE</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for order_item in object.foods.all %}
+    <tr>
+      <td>{{ order_item.food.name }}</td>
+       <td>${{ order_item.food.price }}</td>
+      <td>
+                <a href="{% url 'food:add_to_cart_item' pk=order_item.food.pk %}" class="btn btn-primary btn-md my-0 p"> + </a>
+                {{ order_item.quantity }}
+                <a href="{% url 'food:remove_from_cart_item' pk=order_item.food.pk %}" class="btn btn-primary btn-md my-0 p"> - </a>
+            </td>
+      <td>
                 {% if order_item.discount_price %}
                     ${{ order_item.get_total_discount_price }}
                 {% else %}
                     ${{ order_item.get_total_price }}
                 {% endif %}
             </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-</div>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
                             </div>
                     </div>
                 </div>
-<a href="{% url 'food:checkout' %}">checkout</a>
+        <div class="col-md-12">
+									<div class="submit-button text-center">
+										<a class="btn btn-common text-center"href="{% url 'food:checkout' %}">checkout</a>
+									</div>
+								</div>
+
 	</div>
 	<!-- End Menu -->
 

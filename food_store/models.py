@@ -1,4 +1,5 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 
@@ -76,7 +77,7 @@ class Order(models.Model):
     ordered_date = models.DateTimeField(auto_now_add=True)
     ordered = models.BooleanField(default=False)
     billing_address = models.CharField(max_length=1000, blank=True, null=True)
-    phone = models.IntegerField(blank=True, null=True)
+    phone = PhoneNumberField(blank=True, null=True)
     coupon = models.ForeignKey('Coupon', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
