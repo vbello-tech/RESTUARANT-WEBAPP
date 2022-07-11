@@ -215,7 +215,7 @@ class CheckoutView(View):
             order = Order.objects.get(user=self.request.user, ordered=False)
             # CHECK OUT FORM
             form = CheckOutForm(self.request.POST or None)
-            checkout = Checkout.Objects.get(user=self.request.user)
+            checkout = Checkout.objects.get(user=self.request.user)
             # GETTING THE USER ADDRESS AND PHONE NUMBER TO ADD TO ORDER
             if form.is_valid():
                 address = form.cleaned_data.get('address')
