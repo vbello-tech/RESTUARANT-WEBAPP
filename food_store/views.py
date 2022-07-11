@@ -60,33 +60,7 @@ def ProductView(request, pk):
 @login_required
 def add_to_cart(request, pk):
     # ORDER ITEM TO BE ADDED TO CART
-    food =get_object_or_404(Food, pk=pk)
-    order_item, created = OrderItem.objects.get_or_create(
-        food=food,
-        user=request.user,
-        ordered=False
-    )
-    order_qs = Order.objects.filter(user=request.user, ordered=False)
-    # IF STATEMENT TO CHECK IF ORDER ITEM EXIST IN CART
-    if order_qs.exists():
-        order = order_qs[0]
-        # IF STATEMENT TO INCREASE THE ORDER ITEM QUANTITY BY 1 IF THE USER ALREADY HAS THE food ITEM IN CART
-        if order.foods.filter(food__pk=food.pk).exists():
-            messages.info(request, "This item is in your cart.")
-            return redirect('food:food_detail', pk=pk)
-    else:
-        # CREATE AN ORDER ITEM OF FOOD IF IT DOES NOT EXIST IN USER CART
-        ordered_date = timezone.now()
-        order = Order.objects.create(user=request.user, ordered_date=ordered_date)
-        order.foods.add(order_item)
-        messages.info(request, "This item was added to your cart.")
-    return redirect('food:food_detail', pk=pk)
-
-# FUNCTION TO ADD ITEM TO CART
-@login_required
-def add_to_cart_item(request, pk):
-    # ORDER ITEM TO BE ADDED TO CART
-    food =get_object_or_404(Food, pk=pk)
+    food = get_object_or_404(Food, pk=pk)
     order_item, created = OrderItem.objects.get_or_create(
         food=food,
         user=request.user,
@@ -103,10 +77,42 @@ def add_to_cart_item(request, pk):
             messages.info(request, "This item quantity was increased.")
         else:
             order.foods.add(order_item)
-            return redirect('food:order_summary')
+            return redirect('food:food_detail', pk=pk)
     else:
-        messages.info(request, "Add this item to your cart.")
-        return redirect('food:food_detail', pk=pk)
+        # CREATE AN ORDER ITEM OF FOOD IF IT DOES NOT EXIST IN USER CART
+        ordered_date = timezone.now()
+        order = Order.objects.create(user=request.user, ordered_date=ordered_date)
+        order.foods.add(order_item)
+        messages.info(request, "This item was added to your cart.")
+    return redirect('food:food_detail', pk=pk)
+
+
+# FUNCTION TO ADD ITEM TO CART
+@login_required
+def add_to_cart_item(request, pk):
+    # ORDER ITEM TO BE ADDED TO CART
+    food = get_object_or_404(Food, pk=pk)
+    order_item, created = OrderItem.objects.get_or_create(
+        food=food,
+        user=request.user,
+        ordered=False
+    )
+    order_qs = Order.objects.filter(user=request.user, ordered=False)
+    # IF STATEMENT TO CHECK IF ORDER ITEM EXIST IN CART
+    if order_qs.exists():
+        order = order_qs[0]
+        # IF STATEMENT TO INCREASE THE ORDER ITEM QUANTITY BY 1 IF THE USER ALREADY HAS THE food ITEM IN CART
+        if order.foods.filter(food__pk=food.pk).exists():
+            order_item.quantity += 1
+            order_item.save()
+            messages.info(request, "This item quantity was increased.")
+            return redirect( 'food:order_summary')
+        else:
+            order.foods.add(order_item)
+            return redirect( 'food:order_summary')
+    else:
+       pass
+    return redirect( 'food:order_summary')
 
 
 # REMOVE FROM CART FUNCTIONS
@@ -132,11 +138,11 @@ def remove_from_cart(request, pk):
             order.foods.remove(order_item)
             order_item.delete()
             messages.info(request, "This item was removed from your cart.")
-            return redirect('food:food_detail', pk=pk)
+            return redirect( 'food:order_summary')
         else:
-            return redirect('food:food_detail', pk=pk)
+            return redirect( 'food:order_summary')
     else:
-        return redirect('food:food_detail', pk=pk)
+        return redirect( 'food:order_summary')
 
 # FUNCTION TO REMOVE SINGLE ITEM FROM CART
 @login_required
@@ -156,18 +162,18 @@ def remove_from_cart_item(request, pk):
                 user=request.user,
                 ordered=False
             )[0]
-            # REDUCE QUANTITY OF ORDER ITEM BY 1
-            order_item.quantity -= 1
-            order_item.save()
-            if order_item.quantity <= 0:
-                order.foods.remove(order_item)
-                order_item.delete()
-            messages.info(request, "This item quantiy was reduced.")
-            return redirect('food:order_summary')
+            if order_item.quantity == 1:
+                remove_from_cart(request, pk)
+            else:
+                # REDUCE QUANTITY OF ORDER ITEM BY 1
+                order_item.quantity -= 1
+                order_item.save()
+                messages.info(request, "This item quantiy was reduced.")
+                return redirect( 'food:order_summary')
         else:
-            return redirect('food:order_summary')
+            return redirect( 'food:order_summary')
     else:
-        return redirect('food:order_summary')
+        return redirect( 'food:order_summary')
 
 
 # VIEW TO DISPLAY ALL AVAILABLE ORDER ITEM THAT THE ORDERED STATUS IS FALSE
