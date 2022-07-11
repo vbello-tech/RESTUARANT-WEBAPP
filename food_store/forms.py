@@ -10,22 +10,22 @@ PAYMENT_CHOICES = (
 )
 
 class CheckOutForm(forms.Form):
-    address = forms.CharField(widget=forms.TextInput(attrs={
+    address = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
         'placeholder': 'INPUT ADDRESS',
         'aria-label': 'Recipient\'s username',
         'aria-describedby': 'basic-addon2'
     }))
-    phone = PhoneNumberField(widget=PhoneNumberPrefixWidget(attrs={
+    phone = PhoneNumberField(required=False, widget=PhoneNumberPrefixWidget(attrs={
         'class': 'form-control',
         'placeholder': 'INPUT PHONE NUMBER',
         'aria-describedby': 'basic-addon2'
     }))
-    save_info = forms.BooleanField(widget=forms.CheckboxInput(attrs={
+    save_info = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={
         'class': 'form-control',
         'id': 'save_checkbox'
     }))
-    use_saved_info = forms.BooleanField(widget=forms.CheckboxInput(attrs={
+    use_saved_info = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={
         'class': 'form-control',
         'id': 'fetch_checkbox'
     }))
