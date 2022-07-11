@@ -106,12 +106,11 @@ def add_to_cart_item(request, pk):
             order_item.quantity += 1
             order_item.save()
             messages.info(request, "This item quantity was increased.")
-            return redirect( 'food:order_summary')
+            return redirect('food:order_summary')
         else:
-            order.foods.add(order_item)
-            return redirect( 'food:order_summary')
+            return redirect('food:food_detail', pk=pk)
     else:
-       pass
+       return redirect('food:food_detail', pk=pk)
     return redirect( 'food:order_summary')
 
 
