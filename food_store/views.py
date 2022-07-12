@@ -108,14 +108,14 @@ def add_to_cart_item(request, pk):
             messages.info(request, "This item quantity was increased.")
         else:
             order.foods.add(order_item)
-            return redirect( 'food:order_summary')
+            return redirect('food:order_summary')
     else:
         # CREATE AN ORDER ITEM OF FOOD IF IT DOES NOT EXIST IN USER CART
         ordered_date = timezone.now()
         order = Order.objects.create(user=request.user, ordered_date=ordered_date)
         order.foods.add(order_item)
         messages.info(request, "This item was added to your cart.")
-    return redirect( 'food:order_summary')
+    return redirect('food:order_summary')
 
 
 # REMOVE FROM CART FUNCTIONS
@@ -165,18 +165,15 @@ def remove_from_cart_item(request, pk):
                 user=request.user,
                 ordered=False
             )[0]
-            if order_item.quantity == 1:
-                remove_from_cart(request, pk)
-            else:
-                # REDUCE QUANTITY OF ORDER ITEM BY 1
-                order_item.quantity -= 1
-                order_item.save()
-                messages.info(request, "This item quantiy was reduced.")
-                return redirect( 'food:order_summary')
+            # REDUCE QUANTITY OF ORDER ITEM BY 1
+            order_item.quantity -= 1
+            order_item.save()
+            messages.info(request, "This item quantiy was reduced.")
+            return redirect('food:order_summary')
         else:
-            return redirect( 'food:order_summary')
+            return redirect('food:order_summary')
     else:
-        return redirect( 'food:order_summary')
+        return redirect('food:order_summary')
 
 
 # VIEW TO DISPLAY ALL AVAILABLE ORDER ITEM THAT THE ORDERED STATUS IS FALSE
@@ -217,38 +214,38 @@ class CheckoutView(View):
             order = Order.objects.get(user=self.request.user, ordered=False)
             # CHECK OUT FORM
             form = CheckOutForm(self.request.POST or None)
-            checkout = Checkout.objects.get(user=self.request.user)
+            #checkout = Checkout.objects.get(user=self.request.user)
             # GETTING THE USER ADDRESS AND PHONE NUMBER TO ADD TO ORDER
             if form.is_valid():
                 address = form.cleaned_data.get('address')
                 phone = form.cleaned_data.get('phone')
-                save_info = form.cleaned_data.get('save_info')
-                use_saved_info = form.cleaned_data.get('use_saved_info')
-                if save_info:
-                    if checkout.exist():
-                        new_checkout_details = Checkout.objects.update(
-                            address = address,
-                            phone = phone
-                        )
-                    else:
-                        new_checkout_details = Checkout.objects.create(
-                            address=address,
-                            phone=phone
-                        )
-                    new_checkout_details.save()
-                if use_saved_info:
-                    if checkout.exist():
-                        billing_address = checkout.address
-                        billing_phone = checkout.phone
-                    else:
-                        messages.warning(self.request, "YOU DONT HAVE A SAVED SHIPPING ADDRESS AND PHONE NUMBER.")
-                        return redirect('food:checkout')
-                else:
-                    billing_address = address
-                    billing_phone = phone
+                #save_info = form.cleaned_data.get('save_info')
+               # #use_saved_info = form.cleaned_data.get('use_saved_info')
+                #if save_info:
+                #    if checkout.exist():
+                #        new_checkout_details = Checkout.objects.update(
+                #            address = address,
+                #            phone = phone
+                #        )
+                #    else:
+                #        new_checkout_details = Checkout.objects.create(
+                #            address=address,
+                #            phone=phone
+                #        )
+                #    new_checkout_details.save()
+                #if use_saved_info:
+                #    if checkout.exist():
+                #        billing_address = checkout.address
+                #        billing_phone = checkout.phone
+                #    else:
+                 #       messages.warning(self.request, "YOU DONT HAVE A SAVED SHIPPING ADDRESS AND PHONE NUMBER.")
+                 #       return redirect('food:checkout')
+                #else:
+                 #   billing_address = address
+                #    billing_phone = phone
 
-                order.billing_address = billing_address
-                order.phone = billing_phone
+                order.billing_address = address #billing_address
+                order.phone = phone #billing_phone
                 order.save()
                 # SENDING THE ORDER CONFIRMATION EMAIL
                 #order_confirmation_email(self.request)

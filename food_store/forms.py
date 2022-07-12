@@ -21,6 +21,7 @@ class CheckOutForm(forms.Form):
         'placeholder': 'INPUT PHONE NUMBER',
         'aria-describedby': 'basic-addon2'
     }))
+    """
     save_info = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={
         'class': 'form-control',
         'id': 'save_checkbox'
@@ -29,6 +30,7 @@ class CheckOutForm(forms.Form):
         'class': 'form-control',
         'id': 'fetch_checkbox'
     }))
+"""
 
 class CouponForm(forms.Form):
     code = forms.CharField(widget=forms.TextInput(attrs={
