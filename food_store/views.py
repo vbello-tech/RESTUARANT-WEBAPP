@@ -108,9 +108,9 @@ def add_to_cart_item(request, pk):
             messages.info(request, "This item quantity was increased.")
             return redirect('food:order_summary')
         else:
-            return redirect('food:food_detail', pk=pk)
+            return redirect('food:order_summary')
     else:
-       return redirect('food:food_detail', pk=pk)
+       return redirect('food:order_summary')
     return redirect( 'food:order_summary')
 
 
@@ -178,15 +178,14 @@ def remove_from_cart_item(request, pk):
 # VIEW TO DISPLAY ALL AVAILABLE ORDER ITEM THAT THE ORDERED STATUS IS FALSE
 class order_summaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
-        try:
-            order = Order.objects.get(user=self.request.user, ordered=False)
-            context = {
-                'object':order
-            }
-            return render(self.request, 'food_store/order_summary.html', context)
-        except ObjectDoesNotExist:
-            messages.info(self.request, "YOU DONT HAVE ANY ACTIVE ORDER.")
-            return redirect("food:food_list")
+        order = Order.objects.get(user=self.request.user, ordered=False)
+        if order:
+            object_in_cart = True
+        context = {
+            'object':order,
+            'object_in_cart':object_in_cart
+        }
+        return render(self.request, 'food_store/order_summary.html', context)
 
 
 # CHECK OUT VIEW
