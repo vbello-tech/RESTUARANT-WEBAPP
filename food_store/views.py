@@ -106,11 +106,15 @@ def add_to_cart_item(request, pk):
             order_item.quantity += 1
             order_item.save()
             messages.info(request, "This item quantity was increased.")
-            return redirect('food:order_summary')
         else:
-            return redirect('food:order_summary')
+            order.foods.add(order_item)
+            return redirect( 'food:order_summary')
     else:
-       return redirect('food:order_summary')
+        # CREATE AN ORDER ITEM OF FOOD IF IT DOES NOT EXIST IN USER CART
+        ordered_date = timezone.now()
+        order = Order.objects.create(user=request.user, ordered_date=ordered_date)
+        order.foods.add(order_item)
+        messages.info(request, "This item was added to your cart.")
     return redirect( 'food:order_summary')
 
 
