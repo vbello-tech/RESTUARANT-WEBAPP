@@ -14,9 +14,6 @@
 	</div>
 	<!-- End All Pages -->
 
-
-
- {% if object_in_cart %}
 	<!-- Start Menu -->
 	<div class="menu-box">
                 <div class="container">
@@ -26,7 +23,7 @@
     <table class="table text-center">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">ITEM</th><big></big>
+      <th scope="col">ITEM</th>
       <th scope="col">PRICE</th>
       <th scope="col">QUANTITY</th>
       <th scope="col">TOTAL PRICE</th>
@@ -65,13 +62,6 @@
 								</div>
 
 	</div>
-	<!-- End Menu -->
-{% else %}
-
-<h1>YOU HAVE NO ITEMS IN YOUR CART</h1>
-
-{% endif %}
-
 
 
 {% endblock body %}
