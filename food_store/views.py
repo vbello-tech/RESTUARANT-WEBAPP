@@ -58,7 +58,7 @@ def ProductView(request, pk):
 
 
 # FUNCTION TO ADD ITEM TO CART
-@login_required
+@login_required(login_url='account:login')
 def add_to_cart(request, pk):
     # ORDER ITEM TO BE ADDED TO CART
     food = get_object_or_404(Food, pk=pk)
@@ -89,7 +89,7 @@ def add_to_cart(request, pk):
 
 
 # FUNCTION TO ADD ITEM TO CART
-@login_required
+@login_required(login_url='account:login')
 def add_to_cart_item(request, pk):
     # ORDER ITEM TO BE ADDED TO CART
     food = get_object_or_404(Food, pk=pk)
@@ -120,7 +120,7 @@ def add_to_cart_item(request, pk):
 
 
 # REMOVE FROM CART FUNCTIONS
-@login_required
+@login_required(login_url='account:login')
 def remove_from_cart(request, pk):
     # ORDER ITEM TO REMOVE FROM CART
     food = get_object_or_404(Food, pk=pk)
@@ -149,7 +149,7 @@ def remove_from_cart(request, pk):
         return redirect( 'food:order_summary')
 
 # FUNCTION TO REMOVE SINGLE ITEM FROM CART
-@login_required
+@login_required(login_url='account:login')
 def remove_from_cart_item(request, pk):
     # CHECK IF ORDERED ITEM EXIST IN CART
     food = get_object_or_404(Food, pk=pk)
@@ -281,7 +281,7 @@ class PaymentVerifyView(View):
             messages.success(self.request, "order was successful")
             return redirect("/")
         except ObjectDoesNotExist:
-            #messages.success(self.request, "Your order was successful")
+            messages.success(self.request, "Your order was successful")
             return redirect("/")
 
 # FUNCTION TO GET COUPON
