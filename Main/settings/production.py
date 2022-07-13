@@ -8,12 +8,13 @@ from .base import *
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+DEBUG = config('DEBUG', cast=bool)
+TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
     'localhost',
-    'vbellofoods.herokuapp.com', # your herokuapp url
+    'livefoodsdinner.herokuapp.com', # your herokuapp url
     '127.0.0.1'
 ]
 
