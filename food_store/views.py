@@ -78,7 +78,7 @@ def add_to_cart(request, pk):
             messages.info(request, "This item quantity was increased.")
         else:
             order.foods.add(order_item)
-            return redirect('food:food_detail', pk=pk)
+            return redirect('food:order_summary')
     else:
         # CREATE AN ORDER ITEM OF FOOD IF IT DOES NOT EXIST IN USER CART
         ordered_date = timezone.now()
