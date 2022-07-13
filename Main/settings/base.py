@@ -30,6 +30,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 INSTALLED_APPS = [
     'accounts',
     'food_store',
+    'templatetags.cart_template_tags',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -68,6 +69,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+                'filter':'templatetags.cart_template_tags',
+            },
         },
     },
 ]
