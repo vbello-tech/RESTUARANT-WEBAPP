@@ -46,7 +46,7 @@
                     ${{ order_item.get_total_price }}
                 {% endif %}
           <br>
-                <a href="{% url 'food:remove_from_cart' pk=order_item.food.pk %}" ><big>REMOVE</big></a>
+                <a href="{% url 'food:remove_from_cart' pk=order_item.food.pk %}" >REMOVE </a>
             </td>
     </tr>
   {% endfor %}
