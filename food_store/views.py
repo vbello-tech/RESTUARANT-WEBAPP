@@ -251,7 +251,6 @@ class CheckoutView(View):
                 order.save()
                 # SENDING THE ORDER CONFIRMATION EMAIL
                 #order_confirmation_email(self.request)
-                messages.info(self.request, "ORDER SUCCESSFUL.")
                 return redirect('food:payment')
             else:
                 return redirect('food:checkout')
