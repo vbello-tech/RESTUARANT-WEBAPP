@@ -39,6 +39,7 @@ class AboutView(TemplateView):
 # VIEW TO DISPLAY ALL FOOD IN MODELS
 class FoodListView(ListView):
     model = Food
+    paginate_by = 5
     context_object_name = "foods"
     template_name = "food_store/food_list.html"
 
@@ -179,14 +180,15 @@ def remove_from_cart_item(request, pk):
 # VIEW TO DISPLAY ALL AVAILABLE ORDER ITEM THAT THE ORDERED STATUS IS FALSE
 class order_summaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
-        order = Order.objects.get(user=self.request.user, ordered=False)
-        if order:
-            object_in_cart = True
-        context = {
-            'object':order,
-            'object_in_cart':object_in_cart
-        }
-        return render(self.request, 'food_store/order_summary.html', context)
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            context = {
+                'object':order,
+            }
+            return render(self.request, 'food_store/order_summary.html', context)
+        except ObjectDoesNotExist:
+            messages.warning(self.request, "ADD ITEMS TO YOUR CART")
+            return redirect("food:food_list")
 
 
 # CHECK OUT VIEW

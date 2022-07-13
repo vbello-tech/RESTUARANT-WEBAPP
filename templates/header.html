@@ -24,10 +24,12 @@
 						{% if user.is_authenticated %}
 						<li class="nav-item"><a class="nav-link" href="{% url 'account:logout' %}">LOGOUT</a></li>
 						<li class="nav-item"><a class="nav-link" href="{% url 'account:user_detail' pk=user.pk %}">PROFILE</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'food:order_summary' %}">
+							<span class="badge red z-depth-1 mr-1">{{ request.user|cart_item_count }}</span><i class="bi bi-cart3"></i>
+						</a></li>
 						{% else %}
 						<li class="nav-item"><a class="nav-link" href="{% url 'account:login' %}">LOGIN</a></li>
 						{% endif %}
-						<li class="nav-item"><a class="nav-link" href="{% url 'food:order_summary' %}">ORDERS</a></li>
 					</ul>
 				</div>
 			</div>

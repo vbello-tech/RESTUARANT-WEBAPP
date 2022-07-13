@@ -38,9 +38,9 @@
       <td>{{ order_item.food.name }}</td>
        <td>${{ order_item.food.price }}</td>
       <td>
-                <big><a href="{% url 'food:add_to_cart_item' pk=order_item.food.pk %}" > + </a></big>
+                <big><a href="{% url 'food:add_to_cart_item' pk=order_item.food.pk %}" > <i class="bi bi-file-plus"></i> </a></big>
                 {{ order_item.quantity }}
-                <big><a href="{% url 'food:remove_from_cart_item' pk=order_item.food.pk %}" > - </a></big>
+                <big><a href="{% url 'food:remove_from_cart_item' pk=order_item.food.pk %}" ><i class="bi bi-file-minus"></i></a></big>
             </td>
       <td>
                 {% if order_item.discount_price %}
@@ -48,7 +48,7 @@
                 {% else %}
                     ${{ order_item.get_total_price }}
                 {% endif %}
-                <a href="{% url 'food:remove_from_cart' pk=order_item.food.pk %}" class="btn btn-danger" > REMOVE ROM CART </a>
+                <a href="{% url 'food:remove_from_cart' pk=order_item.food.pk %}" ><span class='bi bi-trash' style='color: red'></span> </a>
             </td>
     </tr>
   {% endfor %}
