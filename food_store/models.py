@@ -91,6 +91,10 @@ class Order(models.Model):
             total -= self.coupon.price
         return total
 
+    def get_paystack_verify_url(self):
+        return reverse("food:paystackverify", kwargs={
+            'pk': self.pk,
+        })
 
 class Coupon(models.Model):
     code = models.CharField(max_length=15)

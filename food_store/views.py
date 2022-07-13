@@ -270,6 +270,21 @@ class PaymentView(View):
         }
         return render (self.request, 'food_store/payment.html', context)
 
+
+class PaymentVerifyView(View):
+    def get(self, request, pk, *args, **kwargs):
+        code = request.GET.get("data")
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False, pk=pk,)
+            order.ordered = True
+            order.ref_code = code
+            order.save()
+            messages.success(self.request, "order was successful")
+            return redirect("/")
+        except ObjectDoesNotExist:
+            #messages.success(self.request, "Your order was successful")
+            return redirect("/")
+
 # FUNCTION TO GET COUPON
 def get_coupon(request, code):
     try:

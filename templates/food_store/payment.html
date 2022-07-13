@@ -74,11 +74,11 @@ function payWithPaystack() {
       // Make an AJAX call to your server with the reference to verify the transaction
       data = response.reference
       $.ajax({
-        url: "{% url 'food:home' %}",
+        url: "{{ order.get_paystack_verify_url }}",
         method: 'GET',
 
       });
-      window.location.href = "{% url 'food:home' %}";
+      window.location.href = "{{ order.get_paystack_verify_url }}";
       //this happens after the payment is completed successfully
       var reference = response.reference;
       //alert('Payment complete! Reference: ' + reference);

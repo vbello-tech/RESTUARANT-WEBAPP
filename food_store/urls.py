@@ -22,4 +22,5 @@ urlpatterns = [
     path('add-coupon/', AddCouponView.as_view(), name='add-coupon'),
     path('checkout/', CheckoutView.as_view(), name="checkout"),
     path('payment/stripe-payment/', PaymentView.as_view(), name="payment"),
+    path('paystack-payment-verified/<int:pk>/', PaymentVerifyView.as_view(), name="paystackverify"),
 ]
